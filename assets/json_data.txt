@@ -1,0 +1,19 @@
+{
+	"data" : [
+		{
+			"name": "이규혁(Ли Кюхюк)",
+			"url": "https://www.facebook.com/LeeKyuHyuk",
+			"picture": "http://graph.facebook.com/LeeKyuHyuk/picture"
+		},
+		{ 
+			"name": "에일리",
+			"url": "https://www.facebook.com/Aileemusic",
+			"picture": "http://graph.facebook.com/Aileemusic/picture"
+		},
+		{
+			"name": "아이유",
+			"url": "https://www.facebook.com/iu.loen",
+			"picture": "http://graph.facebook.com/iu.loen/picture"
+		}
+	]
+}
