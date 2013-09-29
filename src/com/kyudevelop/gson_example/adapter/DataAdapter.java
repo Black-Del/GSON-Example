@@ -1,13 +1,8 @@
 package com.kyudevelop.gson_example.adapter;
 
-import java.io.BufferedInputStream;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +12,25 @@ import android.widget.TextView;
 
 import com.kyudevelop.gson_example.R;
 import com.kyudevelop.gson_example.data.JsonParseData;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 
 public class DataAdapter extends ArrayAdapter<JsonParseData> {
 	private LayoutInflater mInflater;
+	private ImageLoader imageLoader = ImageLoader.getInstance();
+	DisplayImageOptions options;
 	
 	public DataAdapter(Context context, ArrayList<JsonParseData> object) {
 		super(context, 0, object);
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		options = new DisplayImageOptions.Builder()
+		.cacheInMemory(true)
+		.cacheOnDisc(true)
+		.displayer(new RoundedBitmapDisplayer(20)) // 둥그렇게 출력한다.
+		.build();
+		this.imageLoader.init(ImageLoaderConfiguration.createDefault(context));
 	}
 
 	@Override
@@ -37,16 +44,7 @@ public class DataAdapter extends ArrayAdapter<JsonParseData> {
 		if (data != null) {
 			nameView.setText(data.getName());
 			urlView.setText(data.getURL());
-			try {
-			    URL imageUrl = new URL(data.getPhoto());
-			    URLConnection imageConnection = imageUrl.openConnection();
-			    imageConnection.connect();
-			    BufferedInputStream bufferStream = new BufferedInputStream(imageConnection.getInputStream());
-			    Bitmap profileImage = BitmapFactory.decodeStream(bufferStream);
-			    bufferStream.close();
-			    userPicture.setImageBitmap(profileImage);
-			} catch (Exception e) {
-			}
+			ImageLoader.getInstance().displayImage(data.getPhoto(), userPicture, options);
 		}
 		
 		return v;
